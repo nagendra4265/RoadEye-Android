@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RoadEye</string>
+    <string name="app_tagline">Smart Road Damage Reporter</string>
+    <string name="citizen">Citizen</string>
+    <string name="officer">Officer</string>
+    <string name="submit_complaint">Submit Complaint</string>
+    <string name="track_complaints">Track Complaints</string>
+    <string name="report_damage">Report Damage</string>
+    <string name="government_ap">Government of Andhra Pradesh</string>
+    <string name="rnb_department">R&amp;B Department</string>
+</resources>
