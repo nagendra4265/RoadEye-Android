@@ -1,260 +1,332 @@
-# 🛣️ RoadEye — Smart Road Damage Reporter
-### Government of Andhra Pradesh | R&B Department
+# RoadEye — GitHub Ready Android Project
 
-> A production-ready Android application for reporting, tracking, and resolving road damage — empowering citizens and government officers in a single app.
+## Overview
+
+RoadEye is a modern Android application built using Kotlin and Jetpack Compose for smart road damage reporting and complaint management.
+
+The application supports:
+
+* Citizen complaint reporting
+* Officer complaint management
+* Offline-first architecture
+* Firebase backend integration
+* Government-grade UI/UX
+* AI-style road damage analysis
+* Google Maps integration
+* Push notifications
+
+Designed for Andhra Pradesh and Telangana government demo presentations.
 
 ---
 
-## 📱 Screenshots Overview
+# Tech Stack
 
-| Splash | Role Selection | Citizen Dashboard | Officer Dashboard |
-|--------|---------------|-------------------|-------------------|
-| Government-grade splash with animation | Citizen / Officer role cards | Stats, health meter, complaint list | All complaints, priority alerts |
+* Kotlin
+* Jetpack Compose
+* MVVM Clean Architecture
+* Hilt Dependency Injection
+* Firebase Authentication
+* Firebase Firestore
+* Firebase Storage
+* Firebase Cloud Messaging
+* Room Database
+* Coroutines + Flow
+* Material 3
+* CameraX
+* Google Maps SDK
 
 ---
 
-## 🏗️ Architecture
+# Project Structure
 
+```text
+RoadEye/
+│
+├── app/
+│   ├── src/main/java/com/roadeye/
+│   │   ├── ui/
+│   │   │   ├── screens/
+│   │   │   ├── components/
+│   │   │   ├── theme/
+│   │   │   └── navigation/
+│   │   │
+│   │   ├── domain/
+│   │   │   ├── model/
+│   │   │   ├── repository/
+│   │   │   └── usecase/
+│   │   │
+│   │   ├── data/
+│   │   │   ├── local/
+│   │   │   ├── remote/
+│   │   │   └── repository/
+│   │   │
+│   │   ├── di/
+│   │   ├── utils/
+│   │   └── service/
+│   │
+│   ├── res/
+│   └── AndroidManifest.xml
+│
+├── build.gradle.kts
+├── settings.gradle.kts
+├── libs.versions.toml
+└── README.md
 ```
-com.roadeye/
-├── ui/
-│   ├── screens/
-│   │   ├── splash/          SplashScreen + ViewModel
-│   │   ├── roleselection/   RoleSelectionScreen + ViewModel
-│   │   ├── auth/            LoginScreen + OtpVerificationScreen + AuthViewModel
-│   │   ├── citizen/         CitizenDashboardScreen + ViewModel
-│   │   ├── officer/         OfficerDashboardScreen + OfficerComplaintDetailScreen
-│   │   ├── complaint/       CaptureScreen + DetailScreen + TrackingScreen
-│   │   ├── map/             MapScreen + ViewModel
-│   │   ├── notifications/   NotificationsScreen + ViewModel
-│   │   └── profile/         ProfileScreen + ViewModel
-│   ├── components/          Reusable: ComplaintCard, StatCard, RoadHealthMeter, Badges
-│   ├── theme/               Theme.kt, Typography.kt (Material 3)
-│   └── navigation/          NavGraph.kt, Screen.kt
-├── domain/
-│   ├── model/               Complaint, User, Notification, enums
-│   └── repository/          Repository interfaces
-├── data/
-│   ├── local/               Room DB, DAOs, Entities
-│   └── repository/          Firebase + Room implementations
-├── di/                      Hilt modules (DB, Firebase, Repos)
-└── service/                 FCM Messaging Service
-```
 
 ---
 
-## ⚙️ Tech Stack
+# Features
 
-| Layer | Technology |
-|-------|-----------|
-| UI | Jetpack Compose + Material 3 |
-| Architecture | MVVM + Clean Architecture |
-| DI | Hilt |
-| Auth | Firebase Phone OTP + Email/Password |
-| Database | Firebase Firestore (remote) + Room (offline cache) |
-| Storage | Firebase Storage |
-| Push Notifications | Firebase Cloud Messaging (FCM) |
-| Location | Google Play Services Location (FusedLocationProvider) |
-| Maps | Google Maps SDK + Maps Compose |
-| Camera | CameraX |
-| Image Loading | Coil |
-| Reactive | Coroutines + StateFlow |
-| Offline | Room + WorkManager sync |
+## Citizen Module
+
+* OTP login
+* Report potholes
+* CameraX image capture
+* GPS auto location
+* Severity selection
+* Complaint tracking
+* Notifications
+* Complaint history
+
+## Officer Module
+
+* Officer login
+* View all complaints
+* Filter by status
+* Map view
+* Upload repair image
+* Mark complaints resolved
+* Complaint analytics dashboard
+
+## Smart Features
+
+* AI-style pothole detection
+* Duplicate complaint detection
+* Offline sync support
+* Road health meter
+* Telugu + English support
+* Dark mode
 
 ---
 
-## 🚀 Setup Guide
+# Firebase Collections
 
-### 1. Firebase Setup
+## complaints
 
-1. Go to [Firebase Console](https://console.firebase.google.com)
-2. Create a new project: **RoadEye**
-3. Add Android app → Package: `com.roadeye`
-4. Download `google-services.json` → place in `app/`
-5. Enable the following Firebase services:
-   - ✅ **Authentication** → Phone (OTP) + Email/Password
-   - ✅ **Firestore Database** → Start in test mode
-   - ✅ **Storage** → Default bucket
-   - ✅ **Cloud Messaging** (FCM)
-
-### 2. Google Maps API
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com)
-2. Enable: **Maps SDK for Android**
-3. Create an API Key
-4. In `app/build.gradle.kts`, replace:
-   ```kotlin
-   manifestPlaceholders["MAPS_API_KEY"] = "YOUR_GOOGLE_MAPS_API_KEY"
-   ```
-
-### 3. Firestore Security Rules
-
-```js
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /complaints/{doc} {
-      allow read: if request.auth != null;
-      allow create: if request.auth != null;
-      allow update: if request.auth != null;
-    }
-    match /users/{userId} {
-      allow read, write: if request.auth.uid == userId;
-    }
-    match /notifications/{doc} {
-      allow read, write: if request.auth != null;
-    }
-  }
+```json
+{
+  "id": "",
+  "userId": "",
+  "title": "",
+  "description": "",
+  "imageUrl": "",
+  "beforeImageUrl": "",
+  "afterImageUrl": "",
+  "latitude": 0.0,
+  "longitude": 0.0,
+  "address": "",
+  "severity": "HIGH",
+  "status": "SUBMITTED",
+  "createdAt": 0,
+  "updatedAt": 0
 }
 ```
 
-### 4. Officer Account Setup
+---
 
-Create officer accounts in Firebase Console:
-- Authentication → Email/Password
-- Add user: `officer@ap.gov.in` / `password123`
-- In Firestore `users` collection, set `role: "OFFICER"`
+# Setup Instructions
 
-### 5. Build & Run
+## 1. Clone Repository
 
 ```bash
-# Clone
-git clone https://github.com/nagendra4265/RoadEye-Android.git
-cd RoadEye-Android
+git clone https://github.com/your-username/RoadEye.git
+```
 
-# Add your google-services.json to app/
-# Update Maps API key in app/build.gradle.kts
+## 2. Open in Android Studio
 
-# Build
-./gradlew assembleDebug
+Use:
 
-# Install
-./gradlew installDebug
+* Android Studio Narwhal or latest
+* JDK 17
+* Kotlin 2.0+
+
+---
+
+# Firebase Setup
+
+## Enable:
+
+* Authentication → Phone
+* Firestore Database
+* Firebase Storage
+* Cloud Messaging
+
+## Add Files
+
+Place:
+
+```text
+google-services.json
+```
+
+inside:
+
+```text
+app/
 ```
 
 ---
 
-## 📋 Firestore Schema
+# Required Permissions
 
-### `complaints` collection
-```json
-{
-  "id": "auto-generated",
-  "userId": "firebase_uid",
-  "userName": "Ravi Kumar",
-  "userPhone": "+919876543210",
-  "title": "Large pothole on MG Road",
-  "description": "Deep pothole near Benz Circle causing accidents",
-  "imageUrl": "https://storage.firebase.../before.jpg",
-  "beforeImageUrl": "https://storage.firebase.../before.jpg",
-  "afterImageUrl": "https://storage.firebase.../after.jpg",
-  "latitude": 16.5062,
-  "longitude": 80.6480,
-  "address": "MG Road, Vijayawada, AP",
-  "district": "Krishna",
-  "severity": "HIGH",
-  "status": "IN_PROGRESS",
-  "assignedOfficerId": "officer_uid",
-  "assignedOfficerName": "Sri Venkat Rao",
-  "officerNotes": "Repair scheduled for Monday",
-  "roadHealthScore": 35,
-  "resolvedAt": null,
-  "createdAt": 1706000000000,
-  "updatedAt": 1706001000000
-}
-```
-
-### `users` collection
-```json
-{
-  "id": "firebase_uid",
-  "name": "Ravi Kumar",
-  "phone": "+919876543210",
-  "email": "",
-  "role": "CITIZEN",
-  "district": "Krishna",
-  "ward": "Ward 12",
-  "fcmToken": "fcm_device_token"
-}
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 ```
 
 ---
 
-## 🎨 Color Palette
+# Recommended UI Design
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Government Blue | `#1A3A6B` | Primary, headers |
-| Dark Blue | `#0D2247` | Gradients |
-| Saffron | `#FF8C00` | CTAs, accents (national color) |
-| Success Green | `#2E7D32` | Resolved status |
-| Danger Red | `#D32F2F` | High severity |
-| Warning Orange | `#F57C00` | Medium/In-Progress |
+## Citizen Dashboard
 
----
+* Welcome banner
+* Road health meter
+* Nearby complaints
+* Quick report button
+* Complaint statistics
 
-## 🌟 Key Features
+## Officer Dashboard
 
-### Citizen Module
-- 📱 Mobile OTP login (Firebase Phone Auth)
-- 📸 CameraX photo capture of road damage
-- 📍 Auto GPS location with address geocoding
-- 🤖 AI-style pothole detection message after photo
-- ⚠️ Duplicate complaint detection (nearby radius check)
-- 📊 Road Health Meter (Green/Yellow/Red indicator)
-- 📋 Complaint status tracking (Submitted → In Progress → Resolved)
-- 🔔 FCM push notifications for updates
-- 📶 Offline complaint saving (Room DB) + auto-sync
-
-### Officer Module
-- 🏛️ Email/Password login
-- 📊 Dashboard with all complaints & stats
-- 🔍 Filter by status (Pending / In Progress / Resolved)
-- 🗺️ Interactive Google Maps view
-- ✍️ Add officer notes & remarks
-- 📸 Upload "after repair" photo
-- ✅ Mark complaint as resolved
-
-### Smart Features
-- 🌙 Dark Mode support
-- 🌐 Telugu + English bilingual UI
-- 📱 Responsive Material 3 design
-- 🏛️ Government-grade professional UI
-- 📶 Offline-first architecture
+* Analytics cards
+* Severity charts
+* Complaint map
+* Resolution tracking
+* Pending alerts
 
 ---
 
-## 🤝 Demo Data
+# Recommended Animations
 
-For testing, the app includes:
-- Sample complaint cards in the citizen dashboard
-- Notification examples in the notifications screen
-- Demo login bypass buttons (testing only — remove in production)
+Use:
 
----
-
-## 📌 Notes for Production
-
-1. Remove demo login bypass buttons from LoginScreen.kt
-2. Replace `google-services.json` placeholder with real file
-3. Set up proper Firestore security rules
-4. Configure Firebase App Check
-5. Add real Maps API key with domain restrictions
-6. Set up FCM notification topics per district
-7. Implement proper officer role validation in Firestore rules
+* AnimatedVisibility
+* Lottie animations
+* Fade transitions
+* Expandable cards
+* Skeleton loading
 
 ---
 
-## 🏛️ Government Use Case
+# GitHub README Preview
 
-This app demonstrates how technology improves:
-- **Citizen participation** in road maintenance
-- **Accountability** through photo evidence & GPS
-- **Transparency** with real-time status tracking
-- **Efficiency** — single app for both citizens & officers
-- **Data-driven** road health monitoring by district
+## RoadEye
+
+AI-powered mobile governance platform for smart road maintenance.
+
+### Features
+
+* Smart road complaint reporting
+* Real-time officer management
+* Offline-first architecture
+* Government-grade dashboard
+* Firebase cloud sync
+* Telugu support
+
+### Built With
+
+* Kotlin
+* Jetpack Compose
+* Firebase
+* Room Database
+* CameraX
+* Google Maps
 
 ---
 
-*Built for Government of Andhra Pradesh | R&B Department*  
-*రోడ్ ఐ — ప్రతి పౌరుడి అవకాశం*
+# GitHub Repository Suggestions
+
+## Repository Name
+
+```text
+RoadEye-Android
+```
+
+## Topics
+
+```text
+android
+kotlin
+jetpack-compose
+firebase
+government-app
+smart-city
+road-maintenance
+mvvm
+clean-architecture
+```
+
+---
+
+# Recommended Demo Flow
+
+```text
+Citizen Login
+→ Capture Pothole
+→ Upload Complaint
+→ Officer Receives Complaint
+→ Officer Resolves Complaint
+→ Citizen Receives Notification
+```
+
+---
+
+# APK Release Checklist
+
+* Enable ProGuard
+* Add release signing
+* Firebase production config
+* Add app icon
+* Optimize images
+* Enable crash reporting
+
+---
+
+# Future Enhancements
+
+* ML pothole detection
+* District analytics
+* Voice complaint reporting
+* QR-based road verification
+* Smart city integration
+* Officer attendance tracking
+* Drone image support
+
+---
+
+# Suggested Screenshots for GitHub
+
+* Splash Screen
+* Role Selection
+* Citizen Dashboard
+* Complaint Capture
+* Complaint Tracking
+* Officer Dashboard
+* Map View
+* Notifications
+
+---
+
+# Final Positioning
+
+RoadEye is designed as a mobile-first governance platform that improves:
+
+* road maintenance transparency
+* citizen participation
+* officer accountability
+* infrastructure monitoring
+
+without requiring a web dashboard.
