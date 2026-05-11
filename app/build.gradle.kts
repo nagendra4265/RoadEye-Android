@@ -21,7 +21,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Maps API Key (replace with real key)
-        manifestPlaceholders["MAPS_API_KEY"] = "YOUR_GOOGLE_MAPS_API_KEY"
+        manifestPlaceholders["MAPS_API_KEY"] = "AIzaSyBLN-hcXahBjb9_HjXQWtuiNVNa2S1RznY"
     }
 
     buildTypes {

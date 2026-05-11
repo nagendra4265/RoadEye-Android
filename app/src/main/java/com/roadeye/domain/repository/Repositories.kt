@@ -1,13 +1,25 @@
 package com.roadeye.domain.repository
 
+import android.app.Activity
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
 import com.roadeye.domain.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
     val currentUserId: String?
     val isLoggedIn: Boolean
-    suspend fun sendOtp(phoneNumber: String): Result<String>
+
+    fun sendOtp(
+        phoneNumber: String,
+        activity: Activity,
+        onCodeSent: (verificationId: String, resendToken: PhoneAuthProvider.ForceResendingToken) -> Unit,
+        onVerificationCompleted: (credential: PhoneAuthCredential) -> Unit,
+        onError: (message: String) -> Unit
+    )
+
     suspend fun verifyOtp(verificationId: String, otp: String): Result<User>
+    suspend fun signInWithCredential(credential: PhoneAuthCredential): Result<User>
     suspend fun loginOfficer(email: String, password: String): Result<User>
     suspend fun logout()
     suspend fun getCurrentUser(): User?
