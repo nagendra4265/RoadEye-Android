@@ -3,6 +3,7 @@ package com.roadeye.ui.screens.auth
 import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.roadeye.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
